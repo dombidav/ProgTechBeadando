@@ -14,4 +14,4 @@ Az ötlet egy payment system megvalósítása valamilyen belső rendszernek (pl.
 - SOLID elvek
 - Singleton: Adatbázis kapcsolat
 - Template method: fizetési módok
-- ??????
+- Observer: Fizetési értesítések
