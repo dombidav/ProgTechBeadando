@@ -11,11 +11,11 @@ Entering on other locks will be denied by default. I will make a restAPI for loc
 
 Where:
 - AuthorityEnum: 
-    0. Admin (See access log, edit users, edit locks)
-    0. Security (See access log, view users, edit locks)
-    0. Secretary (See access log, edit users, view locks)
-    0. Supervisor (See access log, view users, view locks)
-    0. Worker (Cannot log in)
+    1. Admin (See access log, edit users, edit locks)
+    2. Security (See access log, view users, edit locks)
+    3. Secretary (See access log, edit users, view locks)
+    4. Supervisor (See access log, view users, view locks)
+    5. Worker (Cannot log in)
 
 ### Views
 These will be responsible for writing on console
@@ -28,70 +28,70 @@ These will be responsible for writing on console
 
 ### Controllers
 - User controller
-    0. Log in `logIn`
-    0. New User `create`
-    0. Store new user `store`
-    0. Show users `index`
-    0. Show specific user `show`
-    0. Edit user `edit`
-    0. Update user data `update`
-    0. Delete user `delete`
+    1. Log in `logIn`
+    2. New User `create`
+    3. Store new user `store`
+    4. Show users `index`
+    5. Show specific user `show`
+    6. Edit user `edit`
+    7. Update user data `update`
+    8. Delete user `delete`
 
 ## Proxy
-0. Authorization management before database access
+1. Authorization management before database access
 
 ## Singleton
-0. Database connection and query execution (through proxy)
-0. Error logging
+1. Database connection and query execution (through proxy)
+2. Error logging
 
 ## Decorator
-0. <sub><sup>(Very basic)</sup></sub> query builder
+1. <sub><sup>(Very basic)</sup></sub> query builder
 
 ## Factory
-0. Seed database from CSV
-0. Create debug data for database
+1. Seed database from CSV
+2. Create debug data for database
 
 ## Strategy
-0. Models will implement CRUD operations through strategy
+1. Models will implement CRUD operations through strategy
 
 # Testing (JUnit)
 ## Admin Terminal Access
-0. Worker cannot login (even if they have email & password)
-0. Supervisor:
-    0. login
-    0. see access log
-    0. see user list, but cannot edit it
-    0. see lock list, but cannot edit it
-0. Secretary:
-    0. login
-    0. see access log
-    0. see user list, and can edit it
-    0. see lock list, but cannot edit it
-0. Security:
-    0. login
-    0. see access log
-    0. see user list, but cannot edit it
-    0. see lock list, and can edit it
-0. Admin:
-    0. login
-    0. see access log
-    0. see user list, and can edit it
-    0. see lock list, and can edit it
+1. Worker cannot login (even if they have email & password)
+2. Supervisor:
+    1. login
+    2. see access log
+    3. see user list, but cannot edit it
+    4. see lock list, but cannot edit it
+3. Secretary:
+    1. login
+    2. see access log
+    3. see user list, and can edit it
+    4. see lock list, but cannot edit it
+4. Security:
+    1. login
+    2. see access log
+    3. see user list, but cannot edit it
+    4. see lock list, and can edit it
+5. Admin:
+    1. login
+    2. see access log
+    3. see user list, and can edit it
+    4. see lock list, and can edit it
     
 ## Locks
 (everything will be tested as Admin)
-0. See Locks list
-0. Add new Lock
-0. Edit Locks
+1. See Locks list
+2. Add new Lock
+3. Edit Locks
 
 ## Users
 (everything will be tested as Admin)
-0. See Users list
-0. Add new User
-0. Edit Users
+1. See Users list
+2. Add new User
+3. Edit Users
 
 ## Access Control
-0. Allowed lock can be added to User
-0. Allowed lock can be removed from User
-0. Test if a TestUser can enter at an *"allowed"* lock
-0. Test if a TestUser can enter at a *"not allowed"* lock
+1. Allowed lock can be added to User
+2. Allowed lock can be removed from User
+3. Test if a TestUser can enter at an *"allowed"* lock
+4. Test if a TestUser can enter at a *"not allowed"* lock
