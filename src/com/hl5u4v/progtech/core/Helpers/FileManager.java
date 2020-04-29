@@ -71,6 +71,7 @@ public class FileManager {
             Files.createDirectories(Paths.get("app", dir));
             Path path = Paths.get("app", dir, fileName);
             Charset charSet = StandardCharsets.UTF_8;
+            Files.createFile(path);
             try (var bufferedWriter = Files.newBufferedWriter(path, charSet, StandardOpenOption.CREATE, StandardOpenOption.WRITE, append ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING)) {
                 for (var item : items) {
                     bufferedWriter.write(item.toString());
@@ -94,9 +95,9 @@ public class FileManager {
     public static void writeFile(String dir, String fileName, String value, boolean append) {
         try {
             Files.createDirectories(Paths.get("app", dir));
-            Path path = Paths.get(dir, fileName);
+            Path path = Paths.get("app", dir, fileName);
             Charset charSet = StandardCharsets.UTF_8;
-            try (var bufferedWriter = Files.newBufferedWriter(path, charSet, StandardOpenOption.CREATE, append ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING)) {
+            try (var bufferedWriter = Files.newBufferedWriter(path, charSet, StandardOpenOption.CREATE, StandardOpenOption.WRITE, append ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING)) {
                 bufferedWriter.write(value, 0, value.length());
                 bufferedWriter.newLine();
             } catch (Throwable e) {
