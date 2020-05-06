@@ -1,11 +1,9 @@
 package com.hl5u4v.progtech.test.core.Helpers;
 
-import com.hl5u4v.progtech.core.Helpers.ArrayUtils;
+import com.hl5u4v.progtech.core.helpers.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ArrayUtilsTest {
 

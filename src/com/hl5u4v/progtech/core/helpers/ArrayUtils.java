@@ -1,21 +1,37 @@
-package com.hl5u4v.progtech.core.Helpers;
+package com.hl5u4v.progtech.core.helpers;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
-
+import java.util.ArrayList;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 public class ArrayUtils {
 
-    /**
-     * Concatenate two arrays. It also makes it possible to concatenate arrays of two different types by picking the most general type as the component type of the result.
-     * Source: https://stackoverflow.com/a/80503
-     * @param a First array
-     * @param b Second array
-     * @param <T> Type of arrays
-     * @return Concatenated array
-     */
+    @NotNull
+    public static <T> Iterable<T> where(@NotNull Iterable<T> items, Predicate<T> predicate) {
+        ArrayList<T> result = new ArrayList<>();
+        for (T item : items) {
+            if (predicate.test(item)) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
+
+    @NotNull
+    public static <T, R> Iterable<R> select(@NotNull Iterable<T> items, Function<T, R> func) {
+        ArrayList<R> result = new ArrayList<>();
+        for (T item : items) {
+            result.add(func.apply(item));
+        }
+        return result;
+    }
+
     @SuppressWarnings("SuspiciousSystemArraycopy")
-    public static <T> T concat(T a, T b) {
+    public static <T> T concat(@NotNull T a, T b) {
         if (!a.getClass().isArray() || !b.getClass().isArray()) {
             throw new IllegalArgumentException();
         }
