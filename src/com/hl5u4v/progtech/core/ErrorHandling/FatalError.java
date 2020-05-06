@@ -1,6 +1,7 @@
 package com.hl5u4v.progtech.core.ErrorHandling;
 
-import com.hl5u4v.progtech.core.Helpers.FileManager;
+import com.hl5u4v.progtech.core.Config;
+import com.hl5u4v.progtech.core.helpers.FileManager;
 import com.hl5u4v.progtech.views.ErrorView;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +13,8 @@ public class FatalError {
     public static void Crash(int code, String message, Throwable e) {
         new ErrorView(code, message).show();
         writeErrorLog(code, message, e);
+        if (Config.getInstance().getIsDebug())
+            e.printStackTrace();
         System.exit(code);
     }
 

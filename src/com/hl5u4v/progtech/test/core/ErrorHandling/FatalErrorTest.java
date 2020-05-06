@@ -34,7 +34,7 @@ class FatalErrorTest {
 
     @Test
     void crash() {
-        FatalError.Crash(1, "Test Message", new FileNotFoundException());
+        FatalError.Crash(0, "Test Message", new FileNotFoundException());
         assertTrue(outContent.toString().contains("Test Message"));
     }
 }
