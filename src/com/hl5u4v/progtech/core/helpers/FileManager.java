@@ -1,4 +1,4 @@
-package com.hl5u4v.progtech.core.Helpers;
+package com.hl5u4v.progtech.core.helpers;
 
 import com.hl5u4v.progtech.core.Config;
 import com.hl5u4v.progtech.core.ErrorHandling.FatalError;
@@ -34,17 +34,22 @@ public class FileManager {
                             case "author":
                                 conf.setAuthor(value);
                                 break;
+                            case "debug":
+                                conf.setIsDebug(value.toLowerCase().equals("true"));
                             case "db_host":
-                                conf.Sql().setHost(value);
+                                conf.database().setHost(value);
                                 break;
                             case "db_user":
-                                conf.Sql().setUsername(value);
+                                conf.database().setUsername(value);
                                 break;
                             case "db_password":
-                                conf.Sql().setPassword(value);
+                                conf.database().setPassword(value);
                                 break;
                             case "db_database":
-                                conf.Sql().setDatabase(value);
+                                conf.database().setDatabase(value);
+                                break;
+                            case "db_type":
+                                conf.database().setDBType(value);
                                 break;
                             default:
                                 break;

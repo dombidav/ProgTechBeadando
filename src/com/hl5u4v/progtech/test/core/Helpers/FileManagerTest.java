@@ -1,6 +1,6 @@
 package com.hl5u4v.progtech.test.core.Helpers;
 
-import com.hl5u4v.progtech.core.Helpers.FileManager;
+import com.hl5u4v.progtech.core.helpers.FileManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,10 +38,10 @@ class FileManagerTest {
 
         assertEquals("TestApp", actual.getAppName());
         assertEquals("TestingUser", actual.getAuthor());
-        assertEquals("localhost", actual.Sql().getHost());
-        assertEquals("root", actual.Sql().getUsername());
-        assertEquals("", actual.Sql().getPassword());
-        assertEquals("progtech", actual.Sql().getDatabase());
+        assertEquals("localhost", actual.database().getHost());
+        assertEquals("root", actual.database().getUsername());
+        assertEquals("", actual.database().getPassword());
+        assertEquals("progtech", actual.database().getDatabase());
     }
 
     @AfterEach
