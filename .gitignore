@@ -1,3 +1,3 @@
-/app/log/reports/
-/app/log/errors.log
-/app/log/
+app/log/reports/*
+app/log/errors.log
+app/log/*
