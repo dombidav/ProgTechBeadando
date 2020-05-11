@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.db.blueprints;
 
 import com.hl5u4v.progtech.core.Config;
-import com.hl5u4v.progtech.core.ErrorHandling.FatalError;
+import com.hl5u4v.progtech.core.ErrorHandling.Error_Controller;
 import com.hl5u4v.progtech.core.db.TableField;
 
 import javax.naming.ConfigurationException;
@@ -19,7 +19,7 @@ public class Blueprint implements IBlueprint {
         else if (db.equals("mysql"))
             this.blueprint = new MYSQLBlueprint(tableName);
         else {
-            FatalError.Crash(412, "Unknown database type in configuration file", new ConfigurationException("Unknown database type in configuration file"));
+            Error_Controller.Crash(412, "Unknown database type in configuration file", new ConfigurationException("Unknown database type in configuration file"));
             this.blueprint = null;
         }
     }

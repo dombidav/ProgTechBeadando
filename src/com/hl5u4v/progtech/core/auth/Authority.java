@@ -1,6 +1,7 @@
 package com.hl5u4v.progtech.core.auth;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public enum Authority {
     ADMIN(9),
@@ -13,18 +14,35 @@ public enum Authority {
     private int value;
     private static HashMap<Integer, Authority> map = new HashMap<>();
 
-    private Authority(int value) {
-        this.value = value;
-    }
-
     static {
-        for (Authority pageType : Authority.values()) {
-            map.put(pageType.value, pageType);
+        for (Authority auth : Authority.values()) {
+            map.put(auth.value, auth);
         }
     }
 
-    public static Authority valueOf(int pageType) {
-        return (Authority) map.get(pageType);
+    Authority(int value) {
+        this.value = value;
+    }
+
+    public static Authority valueOf(int index) {
+        return map.get(index);
+    }
+
+    public static Authority randomExcept(Authority... exceptions) {
+        var temp = "01239";
+        for (var ex : exceptions) {
+            temp.replace(String.valueOf(ex.getValue()), "");
+        }
+        Random rnd = new Random();
+        return valueOf(
+                Integer.parseInt(
+                        String.valueOf(
+                                temp.charAt(
+                                        rnd.nextInt(temp.length())              // JAVA MAGIC
+                                )
+                        )
+                )
+        );
     }
 
     public int getValue() {

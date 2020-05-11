@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.db.connectors;
 
 import com.hl5u4v.progtech.core.Config;
-import com.hl5u4v.progtech.core.ErrorHandling.FatalError;
+import com.hl5u4v.progtech.core.ErrorHandling.Error_Controller;
 import com.hl5u4v.progtech.core.db.ResultTable;
 import com.hl5u4v.progtech.core.helpers.List2;
 import com.mysql.cj.jdbc.MysqlDataSource;
@@ -134,14 +134,14 @@ public class MYSQLConnector implements IDatabaseConnector {
             stmt.close();
             con.close();
         } catch (SQLIntegrityConstraintViolationException e) {
-            FatalError.Crash(409, "SQL table integrity violation", e);
+            Error_Controller.Crash(409, "SQL table integrity violation", e);
         } catch (SQLSyntaxErrorException e) {
-            FatalError.Crash(400, "SQL syntax error", e);
+            Error_Controller.Crash(400, "SQL syntax error", e);
         } catch (SQLInvalidAuthorizationSpecException e) {
-            FatalError.Crash(403, "User has no access to this resource", e);
+            Error_Controller.Crash(403, "User has no access to this resource", e);
         } catch (SQLException e) {
             e.printStackTrace();
-            FatalError.Crash(500, "Other SQL error", e);
+            Error_Controller.Crash(500, "Other SQL error", e);
         }
         return result;
     }

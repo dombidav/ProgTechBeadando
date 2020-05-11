@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.db.builders.insert;
 
-import com.hl5u4v.progtech.core.db.DB;
 import com.hl5u4v.progtech.core.db.ResultTable;
+import com.hl5u4v.progtech.core.db.Schema;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ public class MYSQLInsertBuilder implements IInsertBuilder {
 
     @Override
     public ResultTable execute() {
-        if (DB.callExecute(this.getQuery(), this.parameters) == 0) {
+        if (Schema.callExecute(this.getQuery(), this.parameters) == 0) {
             return null;
         }
         return new ResultTable();

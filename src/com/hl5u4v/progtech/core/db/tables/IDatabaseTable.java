@@ -15,6 +15,8 @@ public interface IDatabaseTable {
 
     ISelectorQuery selectRandom(int limit, String... selectors);
 
+    ISelectorQuery selectRandom();
+
     ISelectorQuery selectRandom(String... selectors);
 
     int insert(String... values);

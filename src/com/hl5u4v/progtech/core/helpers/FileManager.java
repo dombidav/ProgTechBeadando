@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.helpers;
 
 import com.hl5u4v.progtech.core.Config;
-import com.hl5u4v.progtech.core.ErrorHandling.FatalError;
+import com.hl5u4v.progtech.core.ErrorHandling.Error_Controller;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -20,7 +20,7 @@ public class FileManager {
     @NotNull
     public static Config LoadEnvironment(String envFile) {
         var conf = new Config();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get("app", envFile).toFile()))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get("env", envFile).toFile()))) {
             while (bufferedReader.ready()) {
                 var line = bufferedReader.readLine().trim();
                 if (!line.startsWith("#")) {
@@ -59,9 +59,9 @@ public class FileManager {
             }
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
-                FatalError.Crash(4041, String.format("Environment file \"%s\" not found.", envFile), e);
+                Error_Controller.Crash(4041, String.format("Environment file \"%s\" not found.", envFile), e);
             } else {
-                FatalError.Crash(4040, String.format("Could not read environment file \"%s\".", envFile), e);
+                Error_Controller.Crash(4040, String.format("Could not read environment file \"%s\".", envFile), e);
             }
         }
         return conf;
@@ -73,8 +73,8 @@ public class FileManager {
 
     public static void writeLines(String dir, String fileName, Object[] items, boolean append) {
         try {
-            Files.createDirectories(Paths.get("app", dir));
-            Path path = Paths.get("app", dir, fileName);
+            Files.createDirectories(Paths.get("env", dir));
+            Path path = Paths.get("env", dir, fileName);
             Charset charSet = StandardCharsets.UTF_8;
             Files.createFile(path);
             try (var bufferedWriter = Files.newBufferedWriter(path, charSet, StandardOpenOption.CREATE, StandardOpenOption.WRITE, append ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING)) {
@@ -99,8 +99,8 @@ public class FileManager {
 
     public static void writeFile(String dir, String fileName, String value, boolean append) {
         try {
-            Files.createDirectories(Paths.get("app", dir));
-            Path path = Paths.get("app", dir, fileName);
+            Files.createDirectories(Paths.get("env", dir));
+            Path path = Paths.get("env", dir, fileName);
             Charset charSet = StandardCharsets.UTF_8;
             try (var bufferedWriter = Files.newBufferedWriter(path, charSet, StandardOpenOption.CREATE, StandardOpenOption.WRITE, append ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING)) {
                 bufferedWriter.write(value, 0, value.length());

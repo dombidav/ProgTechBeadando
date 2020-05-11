@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.db.builders.select;
 
-import com.hl5u4v.progtech.core.db.DB;
 import com.hl5u4v.progtech.core.db.ResultTable;
+import com.hl5u4v.progtech.core.db.Schema;
 import com.hl5u4v.progtech.core.db.builders.IConditionQuery;
 import com.hl5u4v.progtech.core.db.builders.IGroupedQuery;
 import com.hl5u4v.progtech.core.db.builders.ILimitedQuery;
@@ -155,7 +155,7 @@ public class MYSQLSelectQuery implements ISelectorQuery {
 
     @Override
     public ResultTable execute() {
-        return DB.callQuery(this.getQuery(), this.parameters);
+        return Schema.callQuery(this.getQuery(), this.parameters);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class MYSQLSelectQuery implements ISelectorQuery {
     @Override
     public ISelectorQuery orderByRandom() {
         this.orders = "RAND()"; //remove all previous orderings (if any)
-        return new MYSQLSelectQuery(this.tableName);
+        return this;
     }
 
     @Override
@@ -200,7 +200,7 @@ public class MYSQLSelectQuery implements ISelectorQuery {
     @Override
     public ISelectorQuery limit(int max) {
         this.row_count = max;
-        return new MYSQLSelectQuery(this.tableName);
+        return this;
     }
 
     @Override
@@ -208,9 +208,9 @@ public class MYSQLSelectQuery implements ISelectorQuery {
         if (this.row_count == null) {
             return "";
         } else if (this.offset == null) {
-            return String.format("LIMIT %d, %d", this.row_count, this.offset);
-        } else {
             return String.format("LIMIT %d", this.row_count);
+        } else {
+            return String.format("LIMIT %d, %d", this.row_count, this.offset);
         }
     }
 

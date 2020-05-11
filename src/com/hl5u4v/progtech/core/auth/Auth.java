@@ -1,6 +1,6 @@
 package com.hl5u4v.progtech.core.auth;
 
-import org.jetbrains.annotations.Contract;
+import com.hl5u4v.progtech.app.models.User;
 import org.jetbrains.annotations.Nullable;
 
 public class Auth {
@@ -12,17 +12,23 @@ public class Auth {
         this.user = user;
     }
 
-    public static void set(IAuthenticable user){
-        instance = new Auth(user);
-    }
-
     @Nullable
-    public static IAuthenticable getUser(){
+    public static IAuthenticable getUser() {
         return instance == null ? null : instance.user;
     }
 
-    public static boolean check(){
+    public static boolean check() {
         return getUser() != null;
     }
+
+    public static void logout() {
+        instance.user = null;
+    }
+
+    public static void login(User user) {
+        instance = new Auth(user);
+    }
+
+
 }
 

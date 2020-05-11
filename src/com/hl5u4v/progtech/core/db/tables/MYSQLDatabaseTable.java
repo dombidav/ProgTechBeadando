@@ -1,8 +1,8 @@
 package com.hl5u4v.progtech.core.db.tables;
 
 import com.hl5u4v.progtech.core.Config;
-import com.hl5u4v.progtech.core.db.DB;
 import com.hl5u4v.progtech.core.db.ResultTable;
+import com.hl5u4v.progtech.core.db.Schema;
 import com.hl5u4v.progtech.core.db.builders.delete.IDeleteBuilder;
 import com.hl5u4v.progtech.core.db.builders.select.ISelectorQuery;
 import com.hl5u4v.progtech.core.db.builders.select.MYSQLSelectQuery;
@@ -39,6 +39,11 @@ public class MYSQLDatabaseTable implements IDatabaseTable {
     }
 
     @Override
+    public ISelectorQuery selectRandom() {
+        return new MYSQLSelectQuery(tableName).orderByRandom().limit(1);
+    }
+
+    @Override
     public ISelectorQuery selectRandom(String... selectors) {
         return new MYSQLSelectQuery(tableName, selectors).orderByRandom();
     }
@@ -56,16 +61,17 @@ public class MYSQLDatabaseTable implements IDatabaseTable {
             fieldValues.addAll(Arrays.asList(values));
         }
         var query = getInsertQuery(fields, fieldValues.size());
-        return DB.callExecute(query, fieldValues);
+        return Schema.callExecute(query, fieldValues);
     }
 
     private String getInsertQuery(@NotNull ArrayList<String> fields, int n) {
         var q = "?, ".repeat(n);
         q = q.substring(0, q.length() - 2);
+        var s = fields.size() > 1 ? "S" : "";
         if (fields.size() > 0)
-            return String.format("INSERT INTO `%s` (%s) VALUES (%s)", tableName, String.join(", ", fields), q);
+            return String.format("INSERT INTO `%s` (%s) VALUE%s (%s)", tableName, String.join(", ", fields), s, q);
         else
-            return String.format("INSERT INTO `%s` VALUES (%s)", tableName, q);
+            return String.format("INSERT INTO `%s` VALUE%s (%s)", tableName, s, q);
     }
 
     @Override
@@ -77,7 +83,7 @@ public class MYSQLDatabaseTable implements IDatabaseTable {
             fieldValues.add(values.get(key));
         }
         var query = getInsertQuery(fields, fieldValues.size());
-        return DB.callExecute(query, fieldValues);
+        return Schema.callExecute(query, fieldValues);
     }
 
     @Override
@@ -90,7 +96,7 @@ public class MYSQLDatabaseTable implements IDatabaseTable {
             }
         }
         var query = getInsertQuery(fields, fieldValues.size());
-        return DB.callExecute(query, fieldValues);
+        return Schema.callExecute(query, fieldValues);
     }
 
     @Override
@@ -109,7 +115,7 @@ public class MYSQLDatabaseTable implements IDatabaseTable {
         var params = new ArrayList<>();
         params.add(Config.getInstance().database().getDatabase());
         params.add(tableName);
-        return DB.callQuery(
+        return Schema.callQuery(
                 "select " +
                         "COLUMN_NAME as \"name\", " +
                         "COLUMN_TYPE as \"type\", " +

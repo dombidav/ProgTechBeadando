@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.db.tables;
 
-import com.hl5u4v.progtech.core.db.DB;
 import com.hl5u4v.progtech.core.db.ResultTable;
+import com.hl5u4v.progtech.core.db.Schema;
 import com.hl5u4v.progtech.core.db.builders.IConditionQuery;
 import com.hl5u4v.progtech.core.db.builders.ILimitedQuery;
 import com.hl5u4v.progtech.core.db.builders.IOrderableQuery;
@@ -135,7 +135,7 @@ public class MYSQLDeleteBuilder implements IDeleteBuilder {
 
     @Override
     public ResultTable execute() {
-        if (DB.callExecute(this.getQuery(), this.parameters) == 0) {
+        if (Schema.callExecute(this.getQuery(), this.parameters) == 0) {
             return null;
         }
         return new ResultTable();

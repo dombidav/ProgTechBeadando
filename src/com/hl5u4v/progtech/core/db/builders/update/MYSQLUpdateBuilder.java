@@ -1,7 +1,7 @@
 package com.hl5u4v.progtech.core.db.builders.update;
 
-import com.hl5u4v.progtech.core.db.DB;
 import com.hl5u4v.progtech.core.db.ResultTable;
+import com.hl5u4v.progtech.core.db.Schema;
 import com.hl5u4v.progtech.core.db.builders.IConditionQuery;
 import com.hl5u4v.progtech.core.db.builders.ILimitedQuery;
 import com.hl5u4v.progtech.core.db.builders.IOrderableQuery;
@@ -146,7 +146,7 @@ public class MYSQLUpdateBuilder implements IUpdateBuilder {
 
     @Override
     public ResultTable execute() {
-        if (DB.callExecute(this.getQuery(), this.parameters) == 0) {
+        if (Schema.callExecute(this.getQuery(), this.parameters) == 0) {
             return null;
         }
         return new ResultTable();
@@ -156,8 +156,8 @@ public class MYSQLUpdateBuilder implements IUpdateBuilder {
     public String getSelectors() {
         var result = new StringBuilder();
         for (var selector : this.selectors) {
-            result.append(String.format(" `%s`.`%s` = ? ", this.tableName, selector));
+            result.append(String.format(" `%s`.`%s` = ? , ", this.tableName, selector));
         }
-        return result.toString();
+        return result.substring(0, result.length() - 2);
     }
 }

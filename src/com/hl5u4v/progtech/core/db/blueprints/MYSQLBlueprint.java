@@ -159,8 +159,6 @@ public class MYSQLBlueprint implements IBlueprint {
         lastField().addProp(" NOT NULL DEFAULT CURRENT_TIMESTAMP ");
         this.fields.add(new TableField("updated_at", "TIMESTAMP"));
         lastField().addProp(" NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ");
-        this.fields.add(new TableField("deleted_at", "TIMESTAMP"));
-        lastField().addProp(" NULL DEFAULT NULL ");
         return this;
     }
 }
