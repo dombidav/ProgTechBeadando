@@ -4,7 +4,6 @@ import com.hl5u4v.progtech.core.db.Schema;
 import com.hl5u4v.progtech.core.db.blueprints.Blueprint;
 import com.hl5u4v.progtech.core.db.blueprints.IBlueprint;
 import com.hl5u4v.progtech.core.db.tables.IDatabaseTable;
-import com.hl5u4v.progtech.core.helpers.AppDebug;
 import org.jetbrains.annotations.NotNull;
 
 import static com.hl5u4v.progtech.core.db.Schema.createTable;
@@ -41,19 +40,19 @@ public abstract class Migration {
         if (getMigrationsTable().select().where("table", "=", tableName()).execute().all().size() == 0) {
             getMigrationsTable().insert(String.format("`table` = %s", tableName()));
             up();
-            AppDebug.log(String.format("Migrated: %s", tableName()));
+            System.out.println(String.format("Migrated: %s", tableName()));
         } else {
-            AppDebug.log(String.format("`%s` table already migrated", tableName()));
+            System.out.println(String.format("`%s` table already migrated", tableName()));
         }
     }
 
     public final void rollback() {
         if (getMigrationsTable().select().where("table", "=", tableName()).execute().all().size() == 0) {
-            AppDebug.log(String.format("`%s` is not migrated", tableName()));
+            System.out.println(String.format("`%s` is not migrated", tableName()));
         } else {
             getMigrationsTable().delete().where("table", "=", tableName());
             down();
-            AppDebug.log(String.format("`%s` is rolled back", tableName()));
+            System.out.println(String.format("`%s` is rolled back", tableName()));
         }
     }
 }

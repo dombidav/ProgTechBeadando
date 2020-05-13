@@ -29,7 +29,7 @@ public class Lock implements IManyToMany {
     }
 
     public static void delete(String id) {
-        Schema.table("locks").delete().where(id);
+        Schema.table("locks").delete().where(id).execute();
     }
 
     public static List2<HashMap<String, Object>> all() {

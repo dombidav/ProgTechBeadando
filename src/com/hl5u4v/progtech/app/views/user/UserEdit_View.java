@@ -3,11 +3,11 @@ package com.hl5u4v.progtech.app.views.user;
 import com.hl5u4v.progtech.app.controllers.User_Controller;
 import com.hl5u4v.progtech.app.models.User;
 import com.hl5u4v.progtech.core.auth.Authority;
+import com.hl5u4v.progtech.core.interfaces.IForm;
 import com.hl5u4v.progtech.core.interfaces.IModel;
-import com.hl5u4v.progtech.core.interfaces.IResourceManipulatorView;
 import com.hl5u4v.progtech.core.interfaces.IShowModel;
 
-public class UserEdit_View implements IResourceManipulatorView, IShowModel {
+public class UserEdit_View implements IShowModel, IForm {
 
     @Override
     public void show(IModel user) {

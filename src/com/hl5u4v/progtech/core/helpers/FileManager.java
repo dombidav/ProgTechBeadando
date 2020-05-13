@@ -76,7 +76,7 @@ public class FileManager {
             Files.createDirectories(Paths.get("env", dir));
             Path path = Paths.get("env", dir, fileName);
             Charset charSet = StandardCharsets.UTF_8;
-            Files.createFile(path);
+            //Files.createFile(path);
             try (var bufferedWriter = Files.newBufferedWriter(path, charSet, StandardOpenOption.CREATE, StandardOpenOption.WRITE, append ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING)) {
                 for (var item : items) {
                     bufferedWriter.write(item.toString());

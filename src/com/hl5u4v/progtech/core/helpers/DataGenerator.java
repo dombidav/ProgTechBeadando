@@ -1,5 +1,8 @@
 package com.hl5u4v.progtech.core.helpers;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,6 +11,8 @@ import java.util.Random;
 
 public class DataGenerator {
 
+    @NotNull
+    @Contract(value = " -> new", pure = true)
     public static DataGenerator get() {
         return new DataGenerator();
     }
@@ -49,7 +54,7 @@ public class DataGenerator {
      * @param pattern pattern with # ; % ; $ ; * ; + ; ?
      * @return random string based on the pattern.
      */
-    public String fromPattern(String pattern) {
+    public String fromPattern(@NotNull String pattern) {
         Random rnd = new Random();
         StringBuilder result = new StringBuilder();
         var escape = false;
@@ -82,8 +87,10 @@ public class DataGenerator {
                             break;
                         }
                     case '+':
-                        result.append(result.append(charFrom("abcdefghijklmnopqrstuvwxyz")));
+                        result.append(charFrom("abcdefghijklmnopqrstuvwxyz"));
                         break;
+                    default:
+                        result.append(c);
                 }
             }
         }

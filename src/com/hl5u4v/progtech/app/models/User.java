@@ -11,6 +11,7 @@ import com.hl5u4v.progtech.core.helpers.List2;
 import org.jetbrains.annotations.NotNull;
 
 import javax.security.sasl.AuthenticationException;
+import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -35,8 +36,10 @@ public class User implements IAuthenticable, IManyToMany {
         }
     }
 
-    public static void delete(String id) {
-        Schema.table("users").delete().where(id);
+    public static void delete(String id) throws AccessDeniedException {
+        if (Auth.check() && Auth.getUser().getId().equals(id))
+            throw new AccessDeniedException("This user is logged in right now");
+        Schema.table("users").delete().where(id).execute();
     }
 
     public String getName() {

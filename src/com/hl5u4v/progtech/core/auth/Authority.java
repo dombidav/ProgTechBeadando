@@ -1,12 +1,13 @@
 package com.hl5u4v.progtech.core.auth;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Random;
 
 public enum Authority {
     ADMIN(9),
-    //4-8 reserved for future uses
-    SECURITY(3),
+    //3-8 reserved for future uses
     SECRETARY(2),
     SUPERVISOR(1),
     WORKER(0);
@@ -28,8 +29,8 @@ public enum Authority {
         return map.get(index);
     }
 
-    public static Authority randomExcept(Authority... exceptions) {
-        var temp = "01239";
+    public static Authority randomExcept(@NotNull Authority... exceptions) {
+        var temp = "0129";
         for (var ex : exceptions) {
             temp.replace(String.valueOf(ex.getValue()), "");
         }

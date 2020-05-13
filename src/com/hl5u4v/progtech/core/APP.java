@@ -1,18 +1,17 @@
 package com.hl5u4v.progtech.core;
 
-import com.hl5u4v.progtech.app.controllers.Debug_Controller;
-import com.hl5u4v.progtech.app.controllers.Lock_Controller;
-import com.hl5u4v.progtech.app.controllers.Static_Controller;
-import com.hl5u4v.progtech.app.controllers.User_Controller;
+import com.hl5u4v.progtech.app.controllers.*;
 import com.hl5u4v.progtech.core.db.Schema;
+import com.hl5u4v.progtech.core.helpers.List2;
+import javafx.util.Pair;
 
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.function.Consumer;
 
 public class APP {
+
     private static Router router;
     private static APP instance;
-    private boolean exit = false;
-
     private APP() {
         router.registerRoute("debug seed", commands -> new Debug_Controller().seed());
         router.registerRoute("debug routes", commands -> new Debug_Controller().routes());
@@ -27,19 +26,24 @@ public class APP {
 
         router.registerRoute("help", commands -> new Static_Controller().commandPalette());
         router.registerRoute("help ??", commands -> new Static_Controller().commandPalette(commands));
+
+        router.registerUnauthorizedRoute("login ??", commands -> new Auth_Controller().login(commands));
+        router.registerRoute("logout", commands -> new Auth_Controller().logout());
+    }
+
+    public static LinkedList<Pair<String, Consumer<List2<String>>>> getRoutes() {
+        return router.getRoutes();
     }
 
     public static void start() {
         initialize();
-        Scanner in = new Scanner(System.in);
 
         new Static_Controller().welcome();
         new Static_Controller().commandPalette();
+    }
 
-        while (!instance.exit) {
-            var command = in.nextLine();
-            router.call(command);
-        }
+    public static void call(String command) {
+        router.call(command);
     }
 
     private static void initialize() {

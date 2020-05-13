@@ -1,5 +1,6 @@
 package com.hl5u4v.progtech.app.controllers;
 
+import com.hl5u4v.progtech.Main;
 import com.hl5u4v.progtech.app.views.Bye_View;
 import com.hl5u4v.progtech.app.views.Command_View;
 import com.hl5u4v.progtech.app.views.Welcome_View;
@@ -18,7 +19,7 @@ public class Static_Controller implements IController {
 
     public void exit() {
         new Bye_View().show();
-        System.exit(0);
+        Main.exit = true;
     }
 
     public void commandPalette(@NotNull List2<String> commands) {

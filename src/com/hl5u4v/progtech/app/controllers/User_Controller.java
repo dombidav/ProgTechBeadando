@@ -2,7 +2,11 @@ package com.hl5u4v.progtech.app.controllers;
 
 import com.hl5u4v.progtech.app.models.Lock;
 import com.hl5u4v.progtech.app.models.User;
-import com.hl5u4v.progtech.app.views.user.*;
+import com.hl5u4v.progtech.app.views.Message_View;
+import com.hl5u4v.progtech.app.views.user.UserCreate_View;
+import com.hl5u4v.progtech.app.views.user.UserEdit_View;
+import com.hl5u4v.progtech.app.views.user.UserIndex_View;
+import com.hl5u4v.progtech.app.views.user.UserShow_View;
 import com.hl5u4v.progtech.core.helpers.List2;
 import com.hl5u4v.progtech.core.interfaces.IModel;
 import com.hl5u4v.progtech.core.interfaces.IResourceController;
@@ -26,7 +30,12 @@ public class User_Controller implements IResourceController {
 
     @Override
     public void update(IModel model) {
-        store(model);
+        try {
+            store(model);
+            new Message_View().success("User updated");
+        } catch (Exception e) {
+            new Message_View().fail(e.getMessage());
+        }
     }
 
     @Override
@@ -38,27 +47,41 @@ public class User_Controller implements IResourceController {
     public void store(IModel model) {
         try {
             model.save();
-            new UserCreate_View().success();
+            new Message_View().success("New user added");
         } catch (Exception e) {
-            new UserCreate_View().fail(e.getMessage());
+            new Message_View().fail(e.getMessage());
         }
     }
 
     @Override
     public void delete(@NotNull List2<String> id) {
-        User.delete(id.get(0));
-        new UserDelete_View().show();
+        try {
+            User.delete(id.get(0));
+            new Message_View().success("User deleted");
+        } catch (Exception e) {
+            new Message_View().fail(e.getMessage());
+        }
     }
 
     public void allow(@NotNull List2<String> commands) {
-        User.find(commands.get(0))
-                .addLock(Lock.find(commands.get(1)));
-        new UserAllow_View().show();
+        try {
+            var u = User.find(commands.get(0));
+            var l = Lock.find(commands.get(1));
+            u.addLock(l);
+            new Message_View().success(String.format("%s allowed at lock %s", u.getName(), l.getName()));
+        } catch (Exception e) {
+            new Message_View().fail(e.getMessage());
+        }
     }
 
     public void disallow(@NotNull List2<String> commands) {
-        User.find(commands.get(0))
-                .removeLock(Lock.find(commands.get(1)));
-        new UserAllow_View().showDisallow();
+        try {
+            var u = User.find(commands.get(0));
+            var l = Lock.find(commands.get(1));
+            u.removeLock(l);
+            new Message_View().success(String.format("%s disallowed at lock %s", u.getName(), l.getName()));
+        } catch (Exception e) {
+            new Message_View().fail(e.getMessage());
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.hl5u4v.progtech.core.Config;
 import com.hl5u4v.progtech.core.db.blueprints.Blueprint;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -29,11 +28,6 @@ class SchemaTest {
     void initialize() {
         Schema.initialize();
         assertNotNull(Schema.getInstance());
-    }
-
-    @Disabled
-    @Test
-    void getInstance() {
     }
 
     @Test

@@ -8,6 +8,7 @@ import com.hl5u4v.progtech.core.db.builders.IOrderableQuery;
 import com.hl5u4v.progtech.core.db.builders.delete.IDeleteBuilder;
 import com.hl5u4v.progtech.core.db.builders.select.ISelectorQuery;
 import com.hl5u4v.progtech.core.db.builders.select.MYSQLSelectQuery;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -29,14 +30,16 @@ public class MYSQLDeleteBuilder implements IDeleteBuilder {
     }
 
     @Override
-    public IConditionQuery where(String fieldA, String operator, String fieldB) {
+    public IConditionQuery where(@NotNull String fieldA, String operator, String fieldB) {
+        if (fieldA.length() < 1)
+            throw new IllegalArgumentException("Field name was empty");
         this.wheres.add(String.format("AND `%s`.`%s` %s ?", this.tableName, fieldA, operator));
         this.parameters.add(fieldB);
         return this;
     }
 
     @Override
-    public IConditionQuery where(IConditionQuery subQuery) {
+    public IConditionQuery where(@NotNull IConditionQuery subQuery) {
         var subWheres = subQuery.getCondition().startsWith("AND ") ? subQuery.getCondition().substring(4) : subQuery.getCondition().substring(3);
         this.wheres.add(String.format("AND (%s))", subWheres));
         this.parameters.addAll(subQuery.getParameters());

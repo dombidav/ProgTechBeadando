@@ -47,7 +47,7 @@ class FileManagerTest {
     @AfterEach
     void tearDown() {
         try {
-            Files.walk(Paths.get("app", TESTING_DIR)).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            Files.walk(Paths.get("env", TESTING_DIR)).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
         } catch (IOException ignored) {
         }
     }
@@ -58,7 +58,7 @@ class FileManagerTest {
         FileManager.writeLines(TESTING_DIR, TEST_TXT, expected);
         FileManager.writeLines(TESTING_DIR, TEST_TXT, expected); //Should overwrite not append
 
-        var file = Paths.get("app", TESTING_DIR, TEST_TXT).toFile();
+        var file = Paths.get("env", TESTING_DIR, TEST_TXT).toFile();
         assertTrue(file.exists());
 
         List<String> lines = new ArrayList<>();
@@ -88,7 +88,7 @@ class FileManagerTest {
         FileManager.writeLines(TESTING_DIR, TEST_TXT, testArray, true);
         FileManager.writeLines(TESTING_DIR, TEST_TXT, testArray, true); //Should append not overwrite
 
-        var file = Paths.get("app", TESTING_DIR, TEST_TXT).toFile();
+        var file = Paths.get("env", TESTING_DIR, TEST_TXT).toFile();
         assertTrue(file.exists());
 
         List<String> lines = new ArrayList<>();
@@ -109,4 +109,5 @@ class FileManagerTest {
 
         assertArrayEquals(actual, expected);
     }
+
 }

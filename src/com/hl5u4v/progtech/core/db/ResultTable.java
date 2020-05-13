@@ -1,6 +1,7 @@
 package com.hl5u4v.progtech.core.db;
 
 import com.hl5u4v.progtech.core.helpers.List2;
+
 import java.util.HashMap;
 
 public class ResultTable {
@@ -22,7 +23,11 @@ public class ResultTable {
     public HashMap<String, Object> getRecord(int index){
         var result = new HashMap<String, Object>();
         for (int i = 0; i < fieldNames.size(); i++) {
-            result.put(fieldNames.get(i), records.get(index).get(i));
+            try {
+                result.put(fieldNames.get(i), records.get(index).get(i));
+            } catch (IndexOutOfBoundsException ignored) {
+                result.put(fieldNames.get(i), null);
+            }
         }
         return result;
     }
@@ -34,7 +39,11 @@ public class ResultTable {
             return result;
         } else{
             for (var item: records) {
-                result.add(item.get(index));
+                try {
+                    result.add(item.get(index));
+                } catch (IndexOutOfBoundsException ignored) {
+                    result.add(null);
+                }
             }
         }
         return result;
@@ -45,7 +54,10 @@ public class ResultTable {
         for (var record: records) {
             var temp = new HashMap<String, Object>();
             for (int col = 0; col < record.size(); col++) {
-                temp.put(fieldNames.get(col), record.get(col));
+                try {
+                    temp.put(fieldNames.get(col), record.get(col));
+                } catch (IndexOutOfBoundsException ignored) {
+                }
             }
             result.add(temp);
         }
@@ -61,7 +73,10 @@ public class ResultTable {
         try {
             var record = records.get(0);
             for (int col = 0; col < record.size(); col++) {
-                temp.put(fieldNames.get(col), record.get(col));
+                try {
+                    temp.put(fieldNames.get(col), record.get(col));
+                } catch (IndexOutOfBoundsException ignored) {
+                }
             }
         }catch (Exception ignored){ }
         return temp;

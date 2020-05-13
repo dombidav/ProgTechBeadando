@@ -34,7 +34,7 @@ public class List2<T> extends ArrayList<T> {
     }
 
     public T get(int index, T failSafe) {
-        if (index > super.size() || index < 0) {
+        if (index >= super.size() || index < 0) {
             return failSafe;
         }
         return super.get(index);
@@ -49,7 +49,11 @@ public class List2<T> extends ArrayList<T> {
     }
 
     public boolean all(Predicate<T> predicate) {
-        return !any(predicate);
+        for (var item : subList(0, super.size())) {
+            if (!predicate.test(item))
+                return false;
+        }
+        return true;
     }
 
     public List2<T> take(int num) {

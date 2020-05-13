@@ -3,10 +3,10 @@ package com.hl5u4v.progtech.app.views.user;
 import com.hl5u4v.progtech.app.controllers.User_Controller;
 import com.hl5u4v.progtech.app.models.User;
 import com.hl5u4v.progtech.core.auth.Authority;
-import com.hl5u4v.progtech.core.interfaces.IResourceManipulatorView;
+import com.hl5u4v.progtech.core.interfaces.IForm;
 import com.hl5u4v.progtech.core.interfaces.IShow;
 
-public class UserCreate_View implements IResourceManipulatorView, IShow {
+public class UserCreate_View implements IShow, IForm {
     @Override
     public void show() {
         var result = new User();

@@ -1,7 +1,11 @@
 package com.hl5u4v.progtech.app.controllers;
 
 import com.hl5u4v.progtech.app.models.Lock;
-import com.hl5u4v.progtech.app.views.lock.*;
+import com.hl5u4v.progtech.app.views.Message_View;
+import com.hl5u4v.progtech.app.views.lock.LockCreate_View;
+import com.hl5u4v.progtech.app.views.lock.LockEdit_View;
+import com.hl5u4v.progtech.app.views.lock.LockIndex_View;
+import com.hl5u4v.progtech.app.views.lock.LockShow_View;
 import com.hl5u4v.progtech.core.helpers.List2;
 import com.hl5u4v.progtech.core.interfaces.IModel;
 import com.hl5u4v.progtech.core.interfaces.IResourceController;
@@ -25,7 +29,12 @@ public class Lock_Controller implements IResourceController {
 
     @Override
     public void update(IModel model) {
-        store(model);
+        try {
+            store(model);
+            new Message_View().success("Lock deleted");
+        } catch (Exception e) {
+            new Message_View().fail(e.getMessage());
+        }
     }
 
     @Override
@@ -37,15 +46,19 @@ public class Lock_Controller implements IResourceController {
     public void store(IModel model) {
         try {
             model.save();
-            new LockCreate_View().success();
+            new Message_View().success("New lock added");
         } catch (Exception e) {
-            new LockCreate_View().fail(e.getMessage());
+            new Message_View().fail(e.getMessage());
         }
     }
 
     @Override
     public void delete(@NotNull List2<String> id) {
-        Lock.delete(id.get(0));
-        new LockDelete_View().show();
+        try {
+            Lock.delete(id.get(0));
+            new Message_View().success("Lock deleted");
+        } catch (Exception e) {
+            new Message_View().fail(e.getMessage());
+        }
     }
 }
